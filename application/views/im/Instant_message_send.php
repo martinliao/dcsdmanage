@@ -30,7 +30,8 @@
 <div class="row">
 <div class="col-xs-12">
   <div class="box">
-  <form action="http://192.168.50.29/eda/manage/Instant_message/send/" id="sendq" method="post">
+  <!-- <form action="https://elearning.taipei/eda/manage/Instant_message/send/" id="sendq" method="post"> -->
+  <form action="<?=$manage_url?>/Instant_message/send/" id="sendq" method="post">
     <div class="box-header">
       <h3 class="box-title" style="color:green;font-weight: bold;font-size: 35px">寄件匣</h3>
       <br>
@@ -86,7 +87,7 @@ function displayFun(id){
 
 //   if(check){
 //     $.ajax({
-//       url: 'http://192.168.50.29/eda/manage/Instant_message_ajax/get_name',
+//       url: 'http://elearning.taipei/eda/manage/Instant_message_ajax/get_name',
 //       dataType: 'text',
 //       data: {idno:idno},
 //       type: "POST",

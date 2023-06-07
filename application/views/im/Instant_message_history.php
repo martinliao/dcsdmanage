@@ -74,7 +74,8 @@
       <h3 class="box-title" style="color:green;font-weight: bold;font-size: 35px">歷史匣</h3>
       <br>
       <br>
-      <form action="http://192.168.50.29/eda/manage/Instant_message/" method="POST" id="sendq">
+      <!-- <form action="https://elearning.taipei/eda/manage/Instant_message/" method="POST" id="sendq"> -->
+      <form action="<?=$manage_url?>/Instant_message/" method="POST" id="sendq">
         <input type="text" name="search" id="search" value="<?php echo $search; ?>"></input>
         <input type="button" id="search_btn" value="搜尋" onclick="sendFun()"></input>
       </form>
@@ -97,13 +98,15 @@
 
                if(!empty($search)){
                   echo '<tr>
-                        <td><a href="http://192.168.50.29/eda/manage/Instant_message/view/'.$message[$i]->id.'/'.$search.'">'.$message[$i]->title.'</a></td>
+                        <!--<td><a href="https://elearning.taipei/eda/manage/Instant_message/view/'.$message[$i]->id.'/'.$search.'">'.$message[$i]->title.'</a></td>-->
+                        <td><a href="<?=$manage_url?>/Instant_message/view/'.$message[$i]->id.'/'.$search.'">'.$message[$i]->title.'</a></td>
                         <td>'.$message[$i]->recipient_name.'</td>
                         <td>'.$message[$i]->send_time.'</td> 
                       </tr>';
                } else {
                   echo '<tr>
-                        <td><a href="http://192.168.50.29/eda/manage/Instant_message/view/'.$message[$i]->id.'">'.$message[$i]->title.'</a></td>
+                        <!--<td><a href="https://elearning.taipei/eda/manage/Instant_message/view/'.$message[$i]->id.'">'.$message[$i]->title.'</a></td>-->
+                        <td><a href="<?=$manage_url?>/Instant_message/view/'.$message[$i]->id.'">'.$message[$i]->title.'</a></td>
                         <td>'.$message[$i]->recipient_name.'</td>
                         <td>'.$message[$i]->send_time.'</td> 
                       </tr>';

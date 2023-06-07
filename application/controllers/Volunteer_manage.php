@@ -5,7 +5,6 @@ class Volunteer_manage extends CI_Controller{
     public function __construct()
     {
         parent::__construct();
-//debugBreak();
         $this->load->database('phy');
         $this->load->model('volunteer_manage_model');
 
@@ -17,13 +16,15 @@ class Volunteer_manage extends CI_Controller{
         $_SESSION['role_id'] = isset($_SESSION['role_id'])?$_SESSION['role_id']:null;
 
         // 測試機DEBUG用
-        /*if($_SERVER['HTTP_HOST'] == '172.16.10.13')
+        //if($_SERVER['HTTP_HOST'] == '172.16.10.13')
+        if( strcmp(ENVIRONMENT, 'production') != 0 )
         {
             // $_SESSION['userID'] = 1;
             // $_SESSION['role_id'] = 36;
             // demo
             $_SESSION['userID'] = 8;    
             $_SESSION['role_id'] = 19;
+            $_SESSION['userID'] = $this->load->config->item('eda_manage_testrun_id'); // e.g. 90
         }
         
 
@@ -31,8 +32,7 @@ class Volunteer_manage extends CI_Controller{
             die('您無此權限');
         }
 
-        $userID = $_SESSION['userID'];*/
-        $userID = 90;
+        $userID = $_SESSION['userID'];
         $user = $this->db->where('id',$userID)
                          ->get('users')
                          ->row();
@@ -529,7 +529,6 @@ class Volunteer_manage extends CI_Controller{
         // echo '<pre>';
         // print_r($default_setting);
         // die();
-        
 
         $month_start = ($default_setting['year']+1911).'-'.$default_setting['month'].'-1';
 
@@ -1457,12 +1456,12 @@ class Volunteer_manage extends CI_Controller{
 
     public function checkout_to_user()
     {
-        $applyUrl = $this->config->item('eda_apply_url');
         // init
         $data               = array() ;
         // 設定
-        //$data['change_url'] = "http://192.168.50.29/eda/apply/manage/checkout_to_user/" ;
-        $data['change_url'] = $applyUrl . "/manage/checkout_to_user/" ;
+        //$data['change_url'] = "https://elearning.taipei/eda/apply/manage/checkout_to_user/" ;
+        $applyUrl = $this->load->config->item('eda_apply_url');
+        $data['change_url'] = "{$applyUrl}/manage/checkout_to_user/" ;
         // 輸出志工
         $data['userList']   = $this->db->where('role_id','20')->get('users')->result();
 

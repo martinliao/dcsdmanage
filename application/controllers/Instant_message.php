@@ -3,9 +3,13 @@ session_start();
 if(empty($_SESSION['accountuuid'])){
     die('請勿非法登入');
 } else {
-    $db_ip = "192.168.50.103";
-    $db_username = "root";
-    $db_password = "jack5899";
+    //$db_ip = "172.25.154.75";
+    //$db_username = "nelearn";
+    //$db_password = "L@admin01!";
+    $this->load->database('default');
+    $db_ip = $this->db->hostname;
+    $db_username = $this->db->username;
+    $db_password = $this->db->password;
     $db_name2 = "moodle";
 
     $link2 = new mysqli($db_ip, $db_username, $db_password, $db_name2); //moodle
@@ -45,7 +49,7 @@ class Instant_message extends CI_Controller{
         } else {
             $data_list['search'] = '';
         }
-    
+        $data_list['manage_url'] = $this->ci->load->config->item('eda_manage_url');
         $info['mode'] = '1';        
 
         $this->load->view('im/header',$info);
@@ -57,9 +61,11 @@ class Instant_message extends CI_Controller{
         $edit = $this->input->post('act',TRUE);
         if($edit == 'send'){
             $this->instant_message_model->send_message($_POST);
+            $manageUrl = $this->ci->load->config->item('eda_manage_url');
             echo "<script>
                     alert('寄送完成');
-                    location.href='http://192.168.50.29/eda/manage/Instant_message/send/';
+                    // location.href='http://elearning.taipei/eda/manage/Instant_message/send/';
+                    location.href='{$manageUrl}/Instant_message/send/';
                 </script>";
         }
 

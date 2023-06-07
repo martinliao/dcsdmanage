@@ -203,7 +203,8 @@
 
     $('#firstname').on('keyup', function() {
       $.ajax({
-          url: 'http://192.168.50.29/eda/getVolunteerList.php?key=' + this.value,
+          //url: 'https://elearning.taipei/eda/getVolunteerList.php?key=' + this.value,
+          url: '<?=$eda_url?>/getVolunteerList.php?key=' + this.value,
           type: 'GET',
           dataType: 'json'
         })
@@ -242,7 +243,7 @@
     }
 
     function setToday(){
-      　var Today=new Date();
+        var Today=new Date();
         var month = ((Today.getMonth()+1) < 10 ? '0' : '') + (Today.getMonth()+1);
         var day = ((Today.getDate()+1) < 10 ? '0' : '') + (Today.getDate());
 

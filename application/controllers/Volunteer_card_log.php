@@ -97,6 +97,7 @@ class Volunteer_card_log extends CI_Controller{
         $data['info'] = array_values($info); 
         $data['category'] = $this->volunteer_manage_model->get_volunteer_category_detail2();
 
+        $data['eda_url'] = $this->load->config->item('eda_url');
         $this->load->view('volunteer_manage/volunteer_card_log',$data);
         $this->load->view('volunteer_manage/footer');
     }

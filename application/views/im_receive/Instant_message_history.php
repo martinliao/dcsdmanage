@@ -86,9 +86,11 @@
         <?php 
           for($i=0;$i<count($message);$i++){
                 if(isset($history)){
-                  $path = 'http://192.168.50.29/eda/manage/Instant_message_receive/history_view/';
+                  //$path = 'https://elearning.taipei/eda/manage/Instant_message_receive/history_view/';
+                  $path = "{$manage_url}/Instant_message_receive/history_view/";
                 } else {
-                  $path = 'http://192.168.50.29/eda/manage/Instant_message_receive/receive_view/';
+                  //$path = 'https://elearning.taipei/eda/manage/Instant_message_receive/receive_view/';
+                  $path = "{$manage_url}/Instant_message_receive/receive_view/";
                 }
                 echo '<tr>
                       <td><a href="'.$path.$message[$i]->id.'">'.$message[$i]->title.'</a></td>

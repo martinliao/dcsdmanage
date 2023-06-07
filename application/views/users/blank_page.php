@@ -1,5 +1,6 @@
       <ol class="breadcrumb">
-        <li><a href="http://192.168.50.29/eda/manage/course_manage"><i class="fa fa-home"></i> Home</a></li>
+        <!--<li><a href="http://elearning.taipei/eda/manage/course_manage"><i class="fa fa-home"></i> Home</a></li>-->
+        <li><a href="<?=$manage_url?>/course_manage"><i class="fa fa-home"></i> Home</a></li>
         <li class="active">課程資訊</li>
       </ol>
     <!-- Content Header (Page header) -->

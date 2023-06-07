@@ -256,7 +256,8 @@
 
     $('#firstname').on('keyup', function() {
       $.ajax({
-          url: 'http://192.168.50.29/eda/getVolunteerList.php?key=' + this.value,
+          //url: 'https://elearning.taipei/eda/getVolunteerList.php?key=' + this.value,
+          url: '<?=$eda_url?>/getVolunteerList.php?key=' + this.value,
           type: 'GET',
           dataType: 'json'
         })
@@ -332,7 +333,8 @@
                 } ;
 
                 $.ajax({
-                    url: 'http://192.168.50.29/eda/manage/evaluation/save',
+                    //url: 'https://elearning.taipei/eda/manage/evaluation/save',
+                    url: '<?=$manage_url?>/evaluation/save',
                     type: 'POST',
                     dataType: 'json',
                     data: insertData,
@@ -385,7 +387,8 @@
                 } ;
 
                 $.ajax({
-                    url: 'http://192.168.50.29/eda/manage/evaluation/save',
+                    //url: 'https://elearning.taipei/eda/manage/evaluation/save',
+                    url: '<?=$manage_url?>/evaluation/save',
                     type: 'POST',
                     dataType: 'json',
                     data: insertData,
@@ -425,7 +428,8 @@
             } ;
 
             $.ajax({
-                url: 'http://192.168.50.29/eda/manage/evaluation/save',
+                //url: 'https://elearning.taipei/eda/manage/evaluation/save',
+                url: '<?=$manage_url?>/evaluation/save',
                 type: 'POST',
                 dataType: 'json',
                 data: insertData,
@@ -455,7 +459,8 @@
             } ;
 
             $.ajax({
-                url: 'http://192.168.50.29/eda/manage/evaluation/save',
+                //url: 'https://elearning.taipei/eda/manage/evaluation/save',
+                url: '<?=$manage_url?>/evaluation/save',
                 type: 'POST',
                 dataType: 'json',
                 data: insertData,
@@ -511,7 +516,8 @@
             return false;
         } else {
             $.ajax({
-                url: 'http://192.168.50.29/eda/manage/evaluation/againSave',
+                //url: 'https://elearning.taipei/eda/manage/evaluation/againSave',
+                url: '<?=$manage_url?>/evaluation/againSave',
                 type: 'POST',
                 dataType: 'json',
                 data: {list: list, id: id},

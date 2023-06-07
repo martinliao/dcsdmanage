@@ -23,6 +23,7 @@ class Instant_message_receive extends CI_Controller{
         $data_list['message'] = $data;
         $count['cnt'] = $cnt[0]->cnt;
         $data_list['title'] = '收件匣';
+        $data_list['manage_url'] = $this->ci->load->config->item('eda_manage_url');
 
         $count['mode'] = '1';
 
@@ -38,6 +39,7 @@ class Instant_message_receive extends CI_Controller{
         $data_list['history'] = '1';
         $count['cnt'] = $cnt[0]->cnt;
         $data_list['title'] = '歷史匣';
+        $data_list['manage_url'] = $this->ci->load->config->item('eda_manage_url');
 
         $count['mode'] = '2';
 

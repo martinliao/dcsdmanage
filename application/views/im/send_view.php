@@ -27,7 +27,8 @@
   });
 
   function backFun(){
-    location.href="http://192.168.50.29/eda/manage/Instant_message/";
+    //location.href="https://elearning.taipei/eda/manage/Instant_message/";
+    location.href="<?=$manage_url?>/Instant_message/";
   }
 </script>
 
@@ -81,7 +82,8 @@
                 </li>';
             } else {
               echo '<li class="paginate_button">
-                  <a href="http://192.168.50.29/eda/manage/Instant_message/'.$first.'/'.$search.'">第一封</a>
+                  <!--a href="https://elearning.taipei/eda/manage/Instant_message/'.$first.'/'.$search.'">第一封</a-->
+                  <a href="<?=$manage_url?>/Instant_message/'.$first.'/'.$search.'">第一封</a>
                 </li>';
             }
             
@@ -92,7 +94,8 @@
                 </li>';
             } else {
               echo '<li class="paginate_button">
-                  <a href="http://192.168.50.29/eda/manage/Instant_message/view/'.$first.'">第一封</a>
+                  <!--<a href="https://elearning.taipei/eda/manage/Instant_message/view/'.$first.'">第一封</a>-->
+                  <a href="https://elearning.taipei/eda/manage/Instant_message/view/'.$first.'">第一封</a>
                 </li>';
             }
           }
@@ -101,11 +104,13 @@
           if($prev > 0){
             if(!empty($search)){
               echo '<li class="paginate_button">
-                    <a href="http://192.168.50.29/eda/manage/Instant_message/'.$prev.'/'.$search.'">上一封</a>
+                    <!-- <a href="https://elearning.taipei/eda/manage/Instant_message/'.$prev.'/'.$search.'">上一封</a> -->
+                    <a href="<?=$manage_url?> /Instant_message/'.$prev.'/'.$search.'">上一封</a>
                   </li>';
             } else {
               echo '<li class="paginate_button">
-                    <a href="http://192.168.50.29/eda/manage/Instant_message/view/'.$prev.'">上一封</a>
+                    <!-- <a href="https://elearning.taipei/eda/manage/Instant_message/view/'.$prev.'">上一封</a> -->      
+                    <a href="<?=$manage_url?>/Instant_message/view/'.$prev.'">上一封</a>
                   </li>';
             }
           } else {
@@ -119,11 +124,13 @@
           if($next > 0){
             if(!empty($search)){
               echo '<li class="paginate_button">
-                    <a href="http://192.168.50.29/eda/manage/Instant_message/'.$next.'/'.$search.'">下一封</a>
+                    <!--<a href="https://elearning.taipei/eda/manage/Instant_message/'.$next.'/'.$search.'">下一封</a>-->
+                    <a href="<?=$manage_url?>/Instant_message/'.$next.'/'.$search.'">下一封</a>
                   </li>';
             } else {
               echo '<li class="paginate_button">
-                    <a href="http://192.168.50.29/eda/manage/Instant_message/view/'.$next.'">下一封</a>
+                    <!--<a href="https://elearning.taipei/eda/manage/Instant_message/view/'.$next.'">下一封</a>-->
+                    <a href="<?=$manage_url?>/Instant_message/view/'.$next.'">下一封</a>
                   </li>';
             }
           } else {
@@ -141,7 +148,8 @@
                 </li>';
             } else {
               echo '<li class="paginate_button">
-                  <a href="http://192.168.50.29/eda/manage/Instant_message/'.$final.'/'.$search.'">最末封</a>
+                  <!--<a href="https://elearning.taipei/eda/manage/Instant_message/'.$final.'/'.$search.'">最末封</a>-->
+                  <a href="<?=$manage_url?>/Instant_message/'.$final.'/'.$search.'">最末封</a>
                 </li>';
             }
             
@@ -152,7 +160,8 @@
                 </li>';
             } else {
               echo '<li class="paginate_button">
-                  <a href="http://192.168.50.29/eda/manage/Instant_message/view/'.$final.'">最末封</a>
+                  <!--<a href="https://elearning.taipei/eda/manage/Instant_message/view/'.$final.'">最末封</a>-->
+                  <a href="<?=$manage_url?>/Instant_message/view/'.$final.'">最末封</a>
                 </li>';
             }
           }

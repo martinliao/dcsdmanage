@@ -53,7 +53,8 @@
                       <td>'.$course[$i]->fullname.'</td> 
                       <td>
                         <div class="btn-dataset">
-                          <a href="http://192.168.50.29/eda/manage/course_manage/course_info?id='.$course[$i]->id.'" title="edit" class="btn btn-default btn-xs"><i class="fa fa-pencil fa-eye"></i>檢視編輯</a>  
+                          <!--<a href="http://elearning.taipei/eda/manage/course_manage/course_info?id='.$course[$i]->id.'" title="edit" class="btn btn-default btn-xs"><i class="fa fa-pencil fa-eye"></i>檢視編輯</a>-->
+                          <a href="' . $manage_url . '/course_manage/course_info?id='.$course[$i]->id.'" title="edit" class="btn btn-default btn-xs"><i class="fa fa-pencil fa-eye"></i>檢視編輯</a>
                         </div>
                       </td>
                     </tr>';

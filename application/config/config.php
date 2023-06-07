@@ -27,6 +27,10 @@ $httpRoot= $scheme . $_SERVER['HTTP_HOST'] . '/' . $dirx[1] . '/manage/';
 error_log($httpRoot);
 $config['base_url'] = $httpRoot;
 
+$config['eda_url'] = 'https://elearning.taipei/eda';
+$config['eda_apply_url'] = 'https://elearning.taipei/eda/apply';
+$config['eda_manage_url'] = 'https://elearning.taipei/eda/manage';
+
 /*
 |--------------------------------------------------------------------------
 | Index File

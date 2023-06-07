@@ -27,7 +27,8 @@
   });
 
   function backFun(){
-    location.href="http://192.168.50.29/eda/manage/Instant_message_receive/";
+    //location.href="https://elearning.taipei/eda/manage/Instant_message_receive/";
+    location.href="<?=$manage_url?>/Instant_message_receive/";
   }
 </script>
 

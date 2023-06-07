@@ -26,3 +26,7 @@ $config['base_url'] = $httpRoot;
 
 $httpRoot  = "http://".$_SERVER['HTTP_HOST'];
 $config['eda_apply_url'] = $httpRoot . "/apply";
+$config['eda_manage_url'] = $httpRoot . "/manage";
+$config['eda_url'] = $httpRoot;
+
+$config['eda_manage_testrun_id'] = 90;
