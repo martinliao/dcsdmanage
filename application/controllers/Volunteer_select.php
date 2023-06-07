@@ -10,6 +10,8 @@ class Volunteer_select extends CI_Controller{
         $this->load->model('volunteer_select_model');
         $this->load->model('volunteer_manage_model');
 
+        $this->load->model('phy_class_model');
+
         session_start();
         $_SESSION['userID'] = isset($_SESSION['userID'])?$_SESSION['userID']:-1;
 
@@ -59,6 +61,12 @@ class Volunteer_select extends CI_Controller{
             $data['detail'] = array();
             $data['detail'] = $this->volunteer_select_model->get_volunteer_calendar_detail_by_id($cid,$date,$type);
             $data['persons'] = $this->volunteer_select_model->get_person_limit($cid,$date,$type);
+            $_course = $data['course'][0];
+            if( $this->phy_class_model->getPhyBookingPlace($_course->year, $_course->class_no, $_course->term) ) {
+                foreach($data['persons'] as & $_person) {
+                    $_person->num_got_it = 2;
+                }
+            }
         } else if($mode2 == 'save') {
             $data['detail'] = array();
             $post_all = $this->input->post();
@@ -328,7 +336,7 @@ class Volunteer_select extends CI_Controller{
             $body .= "<br><br><br><br><font color='red'>此封信件為系統發出的信件，請勿直接回覆，謝謝！</font>";
             $mail->SMTPAuth = true; 
             $mail->Host = "210.69.61.208"; // SMTP server
-            $mail->setFrom('from@192.168.50.29', '臺北e大');
+            $mail->setFrom('from@elearning.taipei', '臺北e大');
             $mail->Port = 25;
             // SMTP 密码
             $mail->Username = "pstc_apdd"; 

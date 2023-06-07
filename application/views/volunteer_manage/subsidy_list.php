@@ -57,7 +57,11 @@
                 </select>
                 
                 <button type="submit" class="btn btn-primary">
-                    下載資訊
+                    下載PDF檔
+                </button>
+
+                <button type="submit" class="btn btn-primary" value="excel">
+                    下載Excel檔
                 </button>
                 
                 <br>
@@ -79,6 +83,8 @@
                 <br>
                 <br>
                 姓名：<input type="text" class="awesomplete" data-minchars="1" id="firstname" name="firstname" value=""></input>
+                &emsp;清冊顯示:&emsp;<label><input type="checkbox" name="show_type[]" value=1 class="vID">全部顯示</label>&emsp;
+                <label><input type="checkbox" name="show_type[]" value=1 class="vID">僅顯示有刷完二卡</label>&emsp;
                 </div>
                 
             </form>
@@ -91,5 +97,14 @@
     $('.vID.all').on('click',function(){
             $('.vID:not(.all)').prop('checked',$(this).prop('checked'));
     });
-
+    $("#sentq button").click(function(ev){
+        ev.preventDefault();
+        if($(this).attr("value")=="excel"){
+            $("<input />").attr("type", "hidden")
+                .attr("name", "downloadtype")
+                .attr("value", "excel")
+                .appendTo("#sentq");
+        }
+        $("#sentq").submit();
+    });
 </script>

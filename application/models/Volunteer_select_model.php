@@ -500,10 +500,10 @@ class Volunteer_select_model extends MY_Model{
 	function get_sign_log_list($start_date,$end_date,$name,$category){
 		$where = '';
 		if(!empty($start_date) && !empty($end_date)){
-			$start_date = $start_date.' 00:00:00';
-			$end_date = $end_date.' 23:59:59';
-
-			$where .= sprintf(" AND sign_log.sign_time BETWEEN '%s' AND '%s' ",addslashes($start_date),addslashes($end_date));
+			// $start_date = $start_date.' 00:00:00';
+			// $end_date = $end_date.' 23:59:59';
+			// $where .= sprintf(" AND sign_log.sign_time BETWEEN '%s' AND '%s' ",addslashes($start_date),addslashes($end_date));
+			$where .= sprintf(" AND volunteer_calendar.date BETWEEN '%s' AND '%s' ",addslashes($start_date),addslashes($end_date));
 		}
 
 		if(!empty($name)){
@@ -557,13 +557,12 @@ class Volunteer_select_model extends MY_Model{
 								END 
 							END hours
 						FROM
-							sign_log
-							JOIN users ON sign_log.idno = users.idNo
-							JOIN volunteer_calendar_apply ON users.id = volunteer_calendar_apply.userID
+							volunteer_calendar_apply
 							JOIN volunteer_calendar ON volunteer_calendar_apply.calendarID = volunteer_calendar.id 
-							AND DATE_FORMAT( sign_log.sign_time, '%%Y-%%m-%%d' ) = volunteer_calendar.date
+							JOIN users ON users.id = volunteer_calendar_apply.userID
 							JOIN volunteer_classroom ON volunteer_calendar.vcID = volunteer_classroom.id
 							JOIN volunteer_category ON volunteer_classroom.volunteerID = volunteer_category.id 
+							LEFT Join sign_log ON users.idNo = sign_log.idno AND DATE_FORMAT( sign_log.sign_time, '%%Y-%%m-%%d' ) = volunteer_calendar.date
 						WHERE
 							users.role_id = 20 
 							AND volunteer_calendar_apply.got_it = 1 
