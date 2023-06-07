@@ -28,7 +28,7 @@ class Download extends CI_Controller{
     public function subsidy_detail()
     {
         $_post = $this->input->post();
-        $downloadExcel = isset($_post['downloadtype']) ? true : false;
+        $downloadExcel = $_post['downloadtype'] == 'excel' ? true : false;
         $year = intval($this->input->post('year'));
         if ( $year=='' || !is_numeric($year) ) {
             $year = '110' ;
