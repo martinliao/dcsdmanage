@@ -57,7 +57,7 @@
                     <option value="12">12月</option>
                 </select>
                 
-                <button type="submit" class="btn btn-primary">
+                <button type="submit" class="btn btn-primary" value="pdf">
                     下載PDF檔
                 </button>
 
