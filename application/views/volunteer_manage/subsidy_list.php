@@ -7,6 +7,7 @@
             <div class="box-body">  
 
             <form action="<?php echo base_url();?>download/subsidy_detail" method="post" id="sentq" target="_blank">
+                <input type="hidden" id="downloadtype" name="downloadtype" value="pdf">
                 <select class='form-control input-sm' style='width: auto;float: left;margin-top: 2px;margin-right: 10px;' name='year'>
                     <?php
                         $y = date('Y')-1911;
@@ -99,12 +100,7 @@
     });
     $("#sentq button").click(function(ev){
         ev.preventDefault();
-        if($(this).attr("value")=="excel"){
-            $("<input />").attr("type", "hidden")
-                .attr("name", "downloadtype")
-                .attr("value", "excel")
-                .appendTo("#sentq");
-        }
+        $('input[name=downloadtype]').val($(this).attr("value"));
         $("#sentq").submit();
     });
 </script>
