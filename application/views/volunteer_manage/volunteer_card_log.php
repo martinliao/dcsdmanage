@@ -57,7 +57,9 @@
                     <button type="button" class='btn btn-success btn-flat' onclick="exportFun()">匯出</button>
                     <br>
                     <br>
+                    <div class="form-inline">
                     姓名：<input type="text" class="awesomplete" data-minchars="1" id="firstname" name="firstname" value="<?=$name?>"></input>
+                    <p class="form-control-static">* 查無此人, 請先至"C.志工選員"進行志工報名作業.</p>
                     <br>
                     <br>
                     <div>
