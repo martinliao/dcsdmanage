@@ -47,6 +47,11 @@
             info: false,
             paging: false,
             searching: true,
+            oLanguage:  {
+              "sProcessing": "處理中...",
+              "sInfoEmpty": "無任何資料",
+              "sSearch": "搜尋",
+          },
         });
         $('.dataTables_filter').addClass('pull-left');
     });
