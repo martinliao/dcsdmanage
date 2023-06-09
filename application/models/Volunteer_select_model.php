@@ -529,7 +529,8 @@ class Volunteer_select_model extends MY_Model{
 			} 
 		} 
 
-		$sql = sprintf("SELECT
+		$sql = sprintf("SELECT 
+							volunteer_calendar.date,
 							sign_log.idno,
 							sign_log.status,
 							DATE_FORMAT( sign_log.sign_time, '%%Y-%%m-%%d' ) AS sign_date,
