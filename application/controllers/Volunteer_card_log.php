@@ -35,6 +35,9 @@ class Volunteer_card_log extends CI_Controller{
             $tmp_count = count($signList);
             for($i=0;$i<$tmp_count;$i++){
                 $tmp_key = $signList[$i]['idno'].$signList[$i]['sign_date'];
+                if (empty($signList[$i]['idno']) || empty($signList[$i]['sign_date'])) {
+                    $tmp_key = $signList[$i]['userIdNo'] . $signList[$i]['date'];
+                }
                 
                 if(isset($info[$tmp_key])){
                     if($signList[$i]['status'] == 'Y'){
