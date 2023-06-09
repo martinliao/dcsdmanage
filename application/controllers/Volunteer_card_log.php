@@ -81,6 +81,9 @@ class Volunteer_card_log extends CI_Controller{
                     
                     $info[$tmp_key]['total_hours'] = $signList[$i]['hours'];
                 }
+                if (! isset($info[$tmp_key]['sign_date'])){
+                    $info[$tmp_key]['sign_date'] = $signList[$i]['date'];
+                }
             }
 
         }

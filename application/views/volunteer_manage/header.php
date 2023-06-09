@@ -165,15 +165,15 @@
               </a>
             </li>
 
-            <!--li>
+            <li>
               <a href="#">
                 <span>E.服務時數統計表</span>
               </a>
               <ul class="treeview-menu">
                 <li><a href="<?php echo base_url();?>Volunteer_sign_report"><span style="margin-left: 10px">志工服務簽到退紀錄表</span></a></li>
-                <li><a href="<?php echo base_url();?>Volunteer_sign_report/volunteer_traffic_report"><span style="margin-left: 10px">志工餐點與交通補助清冊</span></a></li>
+                <!-- <li><a href="<?php echo base_url();?>Volunteer_sign_report/volunteer_traffic_report"><span style="margin-left: 10px">志工餐點與交通補助清冊</span></a></li> -->
               </ul>
-            </li-->
+            </li>
 
             <li>
               <a href="<?php echo base_url();?>Volunteer_card_log">
@@ -219,6 +219,11 @@
             <li>
               <a href="<?php echo base_url('volunteer_manage/evaluation_leader_user') ?>">
                 <span>M.績效考核組長設定</span>
+              </a>
+            </li>
+            <li>
+              <a href="<?php echo base_url();?>volunteer_manage/manage_admin">
+                <span>N.類別承辦人</span>
               </a>
             </li>
             <li>
