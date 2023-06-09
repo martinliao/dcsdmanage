@@ -1470,6 +1470,14 @@ class Volunteer_manage extends CI_Controller{
         $this->load->view('volunteer_manage/footer');
     }
     
+    public function user_list()
+    {
+        // 輸出志工
+        $data['userList']   = $this->db->where('role_id','20')->get('users')->result();
+        // view
+        $this->load->view('volunteer_manage/user_list' , $data );
+        $this->load->view('volunteer_manage/footer');
+    }
 
 
 

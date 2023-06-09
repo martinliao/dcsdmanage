@@ -221,6 +221,16 @@
                 <span>M.績效考核組長設定</span>
               </a>
             </li>
+            <li>
+              <a href="<?php echo base_url();?>volunteer_manage/user_list">
+                <span>O.志工通訊錄</span>
+              </a>
+            </li>
+            <li>
+              <a href="<?php echo base_url();?>volunteer_manage/ban_users">
+                <span>P.停權設定</span>
+              </a>
+            </li>
           </ul>
         </section>
         <!-- /.sidebar -->
