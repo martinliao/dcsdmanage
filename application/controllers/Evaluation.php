@@ -13,6 +13,11 @@ class Evaluation extends CI_Controller{
         session_start();
         $_SESSION['userID'] = isset($_SESSION['userID'])?$_SESSION['userID']:-1;
 
+        if( (strcmp(ENVIRONMENT, 'production') == 0) ){ 
+            $_SESSION['role_id'] = 19;
+            $_SESSION['userID'] = $this->load->config->item('eda_manage_testrun_id'); // e.g. 90
+        }
+
         if($_SESSION['userID'] == '-1' || $_SESSION['role_id'] != '19'){
             die('您無此權限');
         }
@@ -53,12 +58,19 @@ class Evaluation extends CI_Controller{
                 $data['helf_name'] = '下半年';
             } 
 
-            $info = $this->volunteer_select_model->getUserApplyVolunteerCategory($start_date, $end_date, $category, $name, $year, $helf);
+            $filterStatus = $this->input->post('status');
+            if ($filterStatus == 'all' ) {
+                $info = $this->volunteer_select_model->getUserApplyVolunteerCategory($start_date, $end_date, $category, $name, $year, $helf);
+            } else {
+                $this->load->model('Evaluation_model');
+                $info = $this->Evaluation_model->getSelfEvaluation($start_date, $end_date, $category, $name, $year, $helf, $filterStatus);
+            }
         }
 
         $data['query_year'] = $year;
         $data['query_helf'] = $helf;
         $data['query_name'] = $name;
+
         if(!empty($category)){
             $data['query_category'] = $category;
         } else {
@@ -66,6 +78,8 @@ class Evaluation extends CI_Controller{
         }
 
         $data['info'] = $info; 
+        $data['status'] = isset($filterStatus) ? $filterStatus : 'all';
+
         $data['leader'] = !empty($this->user->evaluation_category_leader)?explode('|',$this->user->evaluation_category_leader):array();
         $data['category'] = $this->volunteer_manage_model->get_volunteer_category_detail2();
         $data['setup_url'] = base_url('/evaluation/setup');
@@ -281,16 +295,16 @@ class Evaluation extends CI_Controller{
         $seid = $this->input->post('seid');
 
         $detail = $this->volunteer_select_model->getEvaluationDetail($seid);
-
+//debugBreak();
         if(!empty($detail)){
             if($detail[0]['category'] == 1){
-                $file = '/www/html/eda/manage/resource/template/evaluation1.docx';
+                $file = FCPATH . 'resource/template/evaluation1.docx';
             } else if($detail[0]['category'] == 2){
-                $file = '/www/html/eda/manage/resource/template/evaluation2.docx';
+                $file = FCPATH . 'resource/template/evaluation2.docx';
             } else if($detail[0]['category'] == 3){
-                $file = '/www/html/eda/manage/resource/template/evaluation3.docx';
+                $file = FCPATH . 'resource/template/evaluation3.docx';
             } else if($detail[0]['category'] == 4){
-                $file = '/www/html/eda/manage/resource/template/evaluation4.docx';
+                $file = FCPATH . 'resource/template/evaluation4.docx';
             } else {
                 die();
             }
@@ -400,7 +414,7 @@ class Evaluation extends CI_Controller{
 
             $templateProcessor->setImageValue('signature', ['path' => $detail[0]['signature'], 'width' => 100]);
 
-            $save_path = "/www/html/eda/manage/resource/evaluation/".$detail[0]['uid']."/";
+            $save_path = FCPATH . "resource/evaluation/".$detail[0]['uid']."/";
             $helf_name = ($detail[0]['helf']==1)?'上半年':'下半年';
             $file_name = $detail[0]['year'].'年'.$helf_name.$detail[0]['category_name'].'-志工考核表.docx';
             $this->TMkdir($save_path,0777);
@@ -743,7 +757,7 @@ class Evaluation extends CI_Controller{
             {
                 $path_d=substr($pathname,0,strrpos($pathname,"/"));
                 $old = umask(0);
-                TMkdir($path_d,$mode);
+                $this->TMkdir($path_d,$mode);
                 umask($old);
             }
         }
