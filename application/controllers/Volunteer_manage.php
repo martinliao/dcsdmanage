@@ -789,6 +789,7 @@ class Volunteer_manage extends CI_Controller{
         $data['users'] = $users;
         $data['user_list'] = $user_list;
         $data['category'] = $this->volunteer_manage_model->get_volunteer_category_detail2();
+        $data['query_category'] = ! empty($data['category']) ? $data['category'] : array();
         
         $this->load->view('volunteer_manage/evaluation_leader_user',$data);
         $this->load->view('volunteer_manage/footer');
@@ -1479,7 +1480,12 @@ class Volunteer_manage extends CI_Controller{
         $this->load->view('volunteer_manage/footer');
     }
 
-
+    public function manage_admin()
+    {
+        $data['managerList'] = $this->db->where('role_id','20')->get('users')->result();
+        $this->load->view('volunteer_manage/user_list' , $data );
+        $this->load->view('volunteer_manage/footer');
+    }
 
     public function set_report_stage()
     {

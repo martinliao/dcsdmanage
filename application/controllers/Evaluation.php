@@ -63,7 +63,12 @@ class Evaluation extends CI_Controller{
                 $info = $this->volunteer_select_model->getUserApplyVolunteerCategory($start_date, $end_date, $category, $name, $year, $helf);
             } else {
                 $this->load->model('Evaluation_model');
-                $info = $this->Evaluation_model->getSelfEvaluation($start_date, $end_date, $category, $name, $year, $helf, $filterStatus);
+                if(!empty($name) ) {
+                    $userId = $this->Evaluation_model->getUserID($name);
+                    $info = $this->Evaluation_model->getEval($year, $helf, $category, $userId);
+                } else {
+                    $info = $this->Evaluation_model->getEval($year, $helf, $category);
+                }
             }
         }
 

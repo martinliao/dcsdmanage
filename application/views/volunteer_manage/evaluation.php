@@ -45,7 +45,9 @@
             <div>
                 <form id="post_form" method="POST" action="">
                 <input type="hidden" id="batch" name="batch" value="">
-                <select class='form-control input-sm' style='width: auto;float: left;margin-top: 2px' id="year" name='year'>
+                <div class="form-inline">
+                    <div class="form-group">
+                    <select class='form-control input-sm' style='width: auto;float: left;margin-top: 2px' id="year" name='year'>
                     <?php
                         $y = date('Y')-1911;
                         if(empty($query_year)){
@@ -59,13 +61,23 @@
                     ?>
                     </select>
                     <p style='float: left;margin-top: 5px'>年</p>
+                    </div>
+                    <div class="form-group">
                     <select class='form-control input-sm' id="helf" name='helf' style='width: auto;float: left;margin-top: 2px'>
                         <option value='1' <?=($query_helf==1)?'selected':''?>>上</option>
                         <option value='2' <?=($query_helf==2)?'selected':''?>>下</option>
                     </select>
                     <p style='float: left;margin-top: 5px'>半年</p>
-                    <br>
-                    <br>
+                    </div>
+                    <div class="form-group">
+                        <label for="status">考核表填寫:</label>
+                        <select class='form-control input-sm' id="status" name='status' >
+                            <option value='all' <?=($status=='all')?'selected':''?>>所有名單</option>
+                            <option value='0' <?=($status=='0')?'selected':''?>>應填</option>
+                            <option value='1' <?=($status=='1')?'selected':''?>>未填</option>
+                        </select>
+                    </div>
+                </div>
                     姓名：<input type="text" class="awesomplete" data-minchars="1" id="firstname" name="firstname" value="<?=$query_name?>"></input>
                     <br>
                     <br>
@@ -113,6 +125,7 @@
                         <?php } ?>
                         <th style="text-align:center;padding-right:0px" class="no-sort">組長評分</th>
                         <th style="text-align:center;padding-right:0px" class="no-sort">填寫狀態</th>
+                        <th style="text-align:center;padding-right:0px" class="no-sort">開放性意見</th>
                         <th style="text-align:center;padding-right:0px" class="no-sort">加權<br>總分</th>
                         <th style="text-align:center;padding-right:0px" class="no-sort">考核<br>等第</th>
                         <th style="text-align:center;padding-right:0px" class="no-sort"><input type="checkbox" id="agree_all" class="again all">機關同意<br>再任否</th>
@@ -157,6 +170,14 @@
                                 echo '<td style="vertical-align:middle"></td>';
                             }
                             
+                            if( isset($info[$i]['selfcomment']) && !empty($info[$i]['selfcomment'])) {
+                                echo "<td>
+                                <button type='button' class='btn btn-lg btn-danger' data-toggle='popover' title='開放性意見' data-content='".$info[$i]['selfcomment']."'>已填寫</button>
+                                </td>";
+                            } else {
+                                echo "<td>未填寫</td>";
+                            }
+
                             $self_grade = 0;
                             if(!empty($info[$i]['top_grade']) && !empty($info[$i]['bottom_grade'])){
                                 $self_grade = ($info[$i]['top_grade']+$info[$i]['bottom_grade'])*0.2;
@@ -256,8 +277,7 @@
 
     $('#firstname').on('keyup', function() {
       $.ajax({
-          //url: 'https://elearning.taipei/eda/getVolunteerList.php?key=' + this.value,
-          url: '<?=$eda_url?>/getVolunteerList.php?key=' + this.value,
+          url: 'https://elearning.taipei/eda/getVolunteerList.php?key=' + this.value,
           type: 'GET',
           dataType: 'json'
         })
@@ -333,8 +353,7 @@
                 } ;
 
                 $.ajax({
-                    //url: 'https://elearning.taipei/eda/manage/evaluation/save',
-                    url: '<?=$manage_url?>/evaluation/save',
+                    url: 'https://elearning.taipei/eda/manage/evaluation/save',
                     type: 'POST',
                     dataType: 'json',
                     data: insertData,
@@ -387,8 +406,7 @@
                 } ;
 
                 $.ajax({
-                    //url: 'https://elearning.taipei/eda/manage/evaluation/save',
-                    url: '<?=$manage_url?>/evaluation/save',
+                    url: 'https://elearning.taipei/eda/manage/evaluation/save',
                     type: 'POST',
                     dataType: 'json',
                     data: insertData,
@@ -428,8 +446,7 @@
             } ;
 
             $.ajax({
-                //url: 'https://elearning.taipei/eda/manage/evaluation/save',
-                url: '<?=$manage_url?>/evaluation/save',
+                url: 'https://elearning.taipei/eda/manage/evaluation/save',
                 type: 'POST',
                 dataType: 'json',
                 data: insertData,
@@ -459,8 +476,7 @@
             } ;
 
             $.ajax({
-                //url: 'https://elearning.taipei/eda/manage/evaluation/save',
-                url: '<?=$manage_url?>/evaluation/save',
+                url: 'https://elearning.taipei/eda/manage/evaluation/save',
                 type: 'POST',
                 dataType: 'json',
                 data: insertData,
@@ -516,8 +532,7 @@
             return false;
         } else {
             $.ajax({
-                //url: 'https://elearning.taipei/eda/manage/evaluation/againSave',
-                url: '<?=$manage_url?>/evaluation/againSave',
+                url: 'https://elearning.taipei/eda/manage/evaluation/againSave',
                 type: 'POST',
                 dataType: 'json',
                 data: {list: list, id: id},
@@ -556,6 +571,10 @@
             e.preventDefault();
         }
 
+    });
+
+    $(document).ready(function(){
+        $('[data-toggle="popover"]').popover();
     });
     
 </script>
