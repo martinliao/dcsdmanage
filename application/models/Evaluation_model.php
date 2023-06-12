@@ -104,8 +104,8 @@ class Evaluation_model extends MY_Model
 			$_tmp = implode(',', $category);
 			$whereStr .= " And cat.id in ({$_tmp})";
 		}
-		
 
+		
 		$_select = 'apply.userID uid, calendarID, u.name user_name, cal.date, classroomId, cat.id category_id, cat.name category_name';
 		$_select .= ', eval.id seid, top_grade, bottom_grade, selfcomment, undertaker_top_grade, undertaker_bottom_grade, undertaker_status, leader_top_grade, leader_bottom_grade, again';
 		$this->db->select($_select)
