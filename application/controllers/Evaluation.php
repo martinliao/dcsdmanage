@@ -13,7 +13,7 @@ class Evaluation extends CI_Controller{
         session_start();
         $_SESSION['userID'] = isset($_SESSION['userID'])?$_SESSION['userID']:-1;
 
-        if( (strcmp(ENVIRONMENT, 'production') == 0) ){ 
+        if( (strcmp(ENVIRONMENT, 'production') != 0) ){ 
             $_SESSION['role_id'] = 19;
             $_SESSION['userID'] = $this->load->config->item('eda_manage_testrun_id'); // e.g. 90
         }

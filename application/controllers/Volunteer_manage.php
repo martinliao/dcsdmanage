@@ -1480,11 +1480,66 @@ class Volunteer_manage extends CI_Controller{
         $this->load->view('volunteer_manage/footer');
     }
 
+    /** ... That dummy app and client. I can not do anything. */
     public function manage_admin()
     {
+        $this->load->model('Manager_model');
+        $users = $this->Manager_model->getManagers(true);
+        $nonAdmins = $this->Manager_model->getManagers(false);
+        $data['users'] = $this->Manager_model->wrapManagers($users);
+        $data['user_list'] = $nonAdmins;
+        $data['category'] = $this->volunteer_manage_model->get_volunteer_category_detail2();
+        $data['query_category'] = ! empty($data['category']) ? $data['category'] : array();
         $data['managerList'] = $this->db->where('role_id','20')->get('users')->result();
-        $this->load->view('volunteer_manage/user_list' , $data );
+        $this->load->view('volunteer_manage/admin_list' , $data );
         $this->load->view('volunteer_manage/footer');
+    }
+
+    /** ... That dummy app and client. I can not do anything. */
+    public function manage_admin_add()
+    {
+        $url = '"'.base_url('volunteer_manage/manage_admin').'"';
+        $userID = intval($this->input->post('userID'));
+        $category = $this->input->post('category');
+        if(!$userID) {
+            echo"<script>
+                    alert('操作錯誤！請選擇會員！');
+                    location.href = $url;
+                </script>
+            ";
+        } else {
+            if(!empty($category)) {
+                $category_list = array();
+                for($i=0;$i<count($category);$i++){
+                    if($category[$i] != 'all'){
+                        $category_list[] = intval($category[$i]);
+                    } 
+                }
+                $evaluation_category = implode('|', $category_list);
+                $this->db->where('id', $userID)->update('users',array('category_admin' => $evaluation_category));
+                echo "<script>
+                    alert('更新完成');
+                    location.href = $url;
+                </script>";
+            } else {
+                echo"<script>
+                        alert('操作錯誤！請選擇類別！');
+                        location.href = $url;
+                    </script>
+                ";
+            }
+        }
+    }
+
+    public function manage_admin_remove(){
+        $userID = intval($this->input->post('userID'));
+        //$url = '"'.base_url('volunteer_manage/manage_admin').'"';
+        if(!$userID) {
+            json_response(array('status'=>false,'msg'=>'操作錯誤，請返回上一步'));
+        } else {
+            $this->db->where('id',$userID)->update('users',array('category_admin' => null));
+            json_response(array('status'=>true,'msg'=>'更新完成'));
+        }
     }
 
     public function set_report_stage()
@@ -1551,7 +1606,15 @@ class Volunteer_manage extends CI_Controller{
         exit ;
     }
 
-
+    public function importdatabase()
+    {
+        $this->load->library('migration');
+		if ($this->migration->latest() === FALSE) {
+			echo $this->migration->error_string();
+		}
+		//$this->session->set_flashdata('success_msg', 'Database migrated successfully!');
+		return redirect('/');
+    }
 
     
 }
