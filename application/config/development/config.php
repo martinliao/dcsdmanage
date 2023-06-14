@@ -30,3 +30,6 @@ $config['eda_manage_url'] = $httpRoot . "/manage";
 $config['eda_url'] = $httpRoot;
 
 $config['eda_manage_testrun_id'] = 90;
+
+$config['eda_manage_testrun_cron_date'] = '2023-06-09 12:00:00';
+$config['eda_manage_testrun_mail'] = 'martin@click-ap.com';

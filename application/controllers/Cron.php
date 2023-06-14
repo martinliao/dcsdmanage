@@ -3,6 +3,7 @@
 class Cron extends CI_Controller
 {
     protected $testdate = NULL;
+    protected $testrun_mail = 'partner@click-ap.com';
 
     public function __construct()
     {
@@ -11,8 +12,8 @@ class Cron extends CI_Controller
         if ((strcmp(ENVIRONMENT, 'production') == 0)) {
             if (!is_cli()) exit('Only CLI access allowed');
         } else {
-            $this->testdate = '2023-06-14';
-            $this->testdate = new DateTime('2023-06-09 12:00:00');
+            $this->testdate = new DateTime($this->config->item('eda_manage_testrun_cron_date'));
+            $this->testrun_mail = $this->config->item('eda_manage_testrun_mail');
         }
         $this->load->database('phy');
         $this->load->model('Cron_model');
@@ -42,7 +43,7 @@ class Cron extends CI_Controller
             //     $this->sendCourseAdminMail($courseID, $evt['date'], $evt['type'], 'martin@click-ap.com');
             // }
             // Multi-days aware:
-            $this->courseEvents($courseID, $events, 'jack@click-ap.com');
+            $this->courseEvents($courseID, $events, $this->testrun_mail);
         }
         echo "*** Notify class-admin is done<br/>";
     }
@@ -59,7 +60,6 @@ class Cron extends CI_Controller
         $bodys = array();
         $emptyBodys = array();
         foreach($courseEvents as $event) {
-            //debugBreak();
             list($vol, $emptyVol) = $this->processCourseAdminEvent($courseID, $event['date'], $event['type']);
             if (!empty($vol)) {
                 $bodys[] = $vol;
@@ -70,7 +70,6 @@ class Cron extends CI_Controller
         if (sizeof($emptyBodys) > 0 ) {
             echo "*** 沒有志工時段: "; 
             var_dump($emptyBodys);
-debugBreak();
             $this->sendCourseAdminMail2($courseName, implode('<br/>', $emptyBodys), $adminMail);
         } else {
             $this->sendCourseAdminMail1($courseName, implode('<br/>', $bodys), $adminMail);
