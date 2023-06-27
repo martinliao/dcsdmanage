@@ -84,8 +84,8 @@
                 <br>
                 <br>
                 姓名：<input type="text" class="awesomplete" data-minchars="1" id="firstname" name="firstname" value=""></input>
-                &emsp;清冊顯示:&emsp;<label><input type="checkbox" name="show_type[]" value=1 class="vID">全部顯示</label>&emsp;
-                <label><input type="checkbox" name="show_type[]" value=1 class="vID">僅顯示有刷完二卡</label>&emsp;
+                &emsp;清冊顯示:&emsp;<label><input type="checkbox" name="show_type[]" value='all' class="vID">全部顯示</label>&emsp;
+                <label><input type="checkbox" name="show_type[]" value=2 class="vID">僅顯示有刷完二卡</label>&emsp;
                 </div>
                 
             </form>
