@@ -28,7 +28,7 @@ class Download extends CI_Controller{
     public function subsidy_detail()
     {
         $_post = $this->input->post();
-        $downloadExcel = $_post['downloadtype'] == 'excel' ? true : false;
+        $downloadExcel = isset($_post['downloadtype']) ? ($_post['downloadtype'] == 'excel' ? true : false) : false;
         $year = intval($this->input->post('year'));
         if ( $year=='' || !is_numeric($year) ) {
             $year = '110' ;
@@ -42,6 +42,17 @@ class Download extends CI_Controller{
         $end_month = intval($this->input->post('end_month'));
         $firstname = addslashes(trim($this->input->post('firstname')));
         $category = $this->input->post('category');
+        $show_types = $_post['show_type'];
+        $showVaildate = false;
+        foreach($show_types as $key => $value) {
+            if(strcasecmp($value, 'all') == 0){
+                $showVaildate = false;
+                break;
+            }
+            if(strcasecmp($value, '2') == 0){
+                $showVaildate = true;
+            }
+        }
         $data = array();
         if(!empty($season)){
             if ( $season=='1' ) {
@@ -105,6 +116,17 @@ class Download extends CI_Controller{
         if(!empty($firstname)){
             $where .= sprintf(" and users.name = '%s'", $firstname);
         }
+
+        $joinStr = '';
+        if($showVaildate) {
+            $joinStr = "LEFT JOIN `sign_log` signOn On signOn.id = (
+Select s1.id FROM sign_log AS s1 Where s1.idno=users.idNo AND DATE_FORMAT( s1.sign_time, '%Y-%m-%d' ) = volunteer_calendar.date AND SUBTIME(s1.sign_time, '00:10:00') <= TIMESTAMP(volunteer_calendar.date, volunteer_calendar_apply.start_time) 
+Order by s1.sign_time LIMIT 1 ) 
+                        LEFT JOIN `sign_log` signOff On signOff.id = (
+Select s2.id FROM sign_log AS s2 Where s2.idno=users.idNo AND DATE_FORMAT( s2.sign_time, '%Y-%m-%d' ) = volunteer_calendar.date AND ADDTIME(s2.sign_time, '00:10:00') <= TIMESTAMP(volunteer_calendar.date, volunteer_calendar_apply.end_time) 
+Order by s2.sign_time desc LIMIT 1 ) ";
+            $where .= " AND (signOn.sign_time is NOT null And signOff.sign_time is NOT null)";
+        }
         
         $sql = sprintf("SELECT 
                             volunteer_calendar_apply.userId, users.name as firstname, users.idNo, users.address, volunteer_classroom.volunteerID, volunteer_category.name, user_signature.signature, MONTH(volunteer_calendar.date) month, count(1) as cnt
@@ -113,15 +135,16 @@ class Download extends CI_Controller{
                         JOIN volunteer_calendar as volunteer_calendar on volunteer_calendar_apply.calendarID = volunteer_calendar.id 
                         JOIN volunteer_classroom on volunteer_calendar.vcID = volunteer_classroom.id
                         JOIN volunteer_category on volunteer_classroom.volunteerID = volunteer_category.id
+                        %s
                         LEFT JOIN `user_signature` as user_signature  on users.id = user_signature.user_id 
                         where volunteer_calendar.date >= '%s' 
-                        and volunteer_calendar.date <= '%s' 
+                        AND volunteer_calendar.date <= '%s' 
                         AND volunteer_calendar_apply.got_it = 1 
                         %s
                         group by volunteer_calendar_apply.userId, volunteer_classroom.volunteerID,MONTH(volunteer_calendar.date)
                         order by users.idNo, volunteer_classroom.volunteerID,MONTH(volunteer_calendar.date)
-                        ", addslashes($start), addslashes($end),$where);
-        
+                        ", $joinStr, addslashes($start), addslashes($end),$where);
+
         $getData = $this->db->query( $sql )->result_array();
 
         $last_data = array();
