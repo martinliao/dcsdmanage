@@ -120,10 +120,10 @@ class Download extends CI_Controller{
         $joinStr = '';
         if($showVaildate) {
             $joinStr = "LEFT JOIN `sign_log` signOn On signOn.id = (
-Select s1.id FROM sign_log AS s1 Where s1.idno=users.idNo AND DATE_FORMAT( s1.sign_time, '%Y-%m-%d' ) = volunteer_calendar.date AND SUBTIME(s1.sign_time, '00:10:00') <= TIMESTAMP(volunteer_calendar.date, volunteer_calendar_apply.start_time) 
+Select s1.id FROM sign_log AS s1 Where s1.idno=users.idNo AND DATE_FORMAT( s1.sign_time, '%Y-%m-%d' ) = volunteer_calendar.date AND SUBTIME(s1.sign_time, '00:30:00') <= TIMESTAMP(volunteer_calendar.date, volunteer_calendar_apply.start_time) 
 Order by s1.sign_time LIMIT 1 ) 
                         LEFT JOIN `sign_log` signOff On signOff.id = (
-Select s2.id FROM sign_log AS s2 Where s2.idno=users.idNo AND DATE_FORMAT( s2.sign_time, '%Y-%m-%d' ) = volunteer_calendar.date AND ADDTIME(s2.sign_time, '00:10:00') <= TIMESTAMP(volunteer_calendar.date, volunteer_calendar_apply.end_time) 
+Select s2.id FROM sign_log AS s2 Where s2.idno=users.idNo AND DATE_FORMAT( s2.sign_time, '%Y-%m-%d' ) = volunteer_calendar.date AND ADDTIME(s2.sign_time, '00:30:00') <= TIMESTAMP(volunteer_calendar.date, volunteer_calendar_apply.end_time) 
 Order by s2.sign_time desc LIMIT 1 ) ";
             $where .= " AND (signOn.sign_time is NOT null And signOff.sign_time is NOT null)";
         }
